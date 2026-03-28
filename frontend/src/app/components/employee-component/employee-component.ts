@@ -43,5 +43,23 @@ export class EmployeeComponent {
         this.cargando.set(false);
       },
     });
+    updateField< K extends keyof Employee>(field: K, value: Employee[K] ) {
+      this.selectedEmployee.update((emp) => ({ ...emp, [field]: value }));
+    }
+    saveEmployee() {
+      if (this.isEditing()) {
+        const emp = this.selectedEmployee();
+        if (this.isEditing()) {
+          this.employeeService.putEmployee(emp)=>({
+            this.loadEmployees();
+            this.resetForm();
+          });
+        }else{
+          const {_id, ...employeeWithoutId} = emp
+          this.employeeService.createEmployee(employeeWithoutId).subscribe({}=>{
+            this.loadEmployees,
+            this.resetForm(); 
+          });
+        }
   }
 
